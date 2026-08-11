@@ -1,10 +1,831 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="google-site-verification" content="-6Vq538l3J_CQ8pWP3QKK3qIA5TysYCoZpQpWb1vSho" />
-    <title>Vagelis Dermos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Vagelis Dermos — Support Services Manager, programmer and technology enthusiast."
+  >
+<meta name="google-site-verification" content="-6Vq538l3J_CQ8pWP3QKK3qIA5TysYCoZpQpWb1vSho" />
+
+  <title>Vagelis Dermos — Support Services Manager</title>
+
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --surface: #121821;
+      --surface-hover: #171f2a;
+      --text: #eef2f7;
+      --muted: #aab4c0;
+      --border: #273240;
+      --accent: #69b7ff;
+      --accent-light: #9ed2ff;
+      --max-width: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    header {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+
+      border-bottom: 1px solid var(--border);
+
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(105, 183, 255, 0.12),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 10% 70%,
+          rgba(158, 210, 255, 0.06),
+          transparent 30%
+        );
+    }
+
+    .hero {
+      padding: 80px 0;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      margin: 0 0 25px;
+    }
+
+    .role {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--accent-light);
+      font-weight: 600;
+      margin: 0 0 30px;
+    }
+
+    .intro {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 17px;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      color: var(--text);
+      background: var(--surface);
+
+      transition: 0.2s ease;
+    }
+
+    .button:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      padding: 70px 0;
+    }
+
+    section {
+      padding: 60px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+    }
+
+    .section-label {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0 0 25px;
+
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    /* =========================
+       EXPERIENCE
+    ========================= */
+
+    .timeline {
+      margin-top: 30px;
+    }
+
+    .job {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+
+      gap: 35px;
+
+      padding: 30px 0;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .job:first-child {
+      border-top: 0;
+    }
+
+    .date {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .job-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .job p {
+      color: var(--muted);
+      max-width: 720px;
+      margin-top: 10px;
+    }
+
+    /* =========================
+       PROJECTS
+    ========================= */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+
+      margin-top: 30px;
+    }
+
+    .card {
+      min-height: 190px;
+
+      padding: 26px;
+
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      transition: 0.2s ease;
+    }
+
+    .card:hover {
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+
+    .tag {
+      display: inline-block;
+
+      margin-bottom: 18px;
+      padding: 5px 9px;
+
+      border-radius: 5px;
+
+      background: var(--surface-hover);
+      color: var(--accent-light);
+
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* =========================
+       SKILLS
+    ========================= */
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      margin-top: 25px;
+    }
+
+    .skill {
+      padding: 8px 13px;
+
+      border: 1px solid var(--border);
+      border-radius: 999px;
+
+      color: var(--muted);
+      background: var(--surface);
+
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       HOME ASSISTANT
+    ========================= */
+
+    .currently {
+      padding: 30px;
+
+      margin-top: 30px;
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      background: var(--surface);
+    }
+
+    .currently strong {
+      display: block;
+
+      margin-bottom: 8px;
+
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 35px 0 55px;
+
+      color: var(--muted);
+
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 720px) {
+
+      header {
+        min-height: auto;
+      }
+
+      .hero {
+        padding: 100px 0 70px;
+      }
+
+      main {
+        padding: 40px 0;
+      }
+
+      section {
+        padding: 45px 0;
+      }
+
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .job {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Welcome</h1>
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <header>
+    <div class="container hero">
+
+      <div class="eyebrow">
+        Technology · Management · Development
+      </div>
+
+      <h1>
+        Vagelis Dermos
+      </h1>
+
+      <p class="role">
+        Support Services Manager
+      </p>
+
+      <p class="intro">
+        I’m a Support Services Manager with a strong technical background
+        in software development, business technology and ERP systems.
+        I combine people management, technical understanding and service
+        operations — while keeping programming and technology as an
+        important part of what I do.
+      </p>
+
+      <div class="links">
+
+        <a
+          class="button"
+          href="https://github.com/vagelisdermos"
+          target="_blank"
+          rel="noopener"
+        >
+          GitHub
+        </a>
+
+        <!-- Βάλε εδώ το LinkedIn σου -->
+        <a
+          class="button"
+          href="#"
+        >
+          LinkedIn
+        </a>
+
+        <!-- Βάλε εδώ το email σου -->
+        <a
+          class="button"
+          href="mailto:YOUR_EMAIL@example.com"
+        >
+          Email
+        </a>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <main class="container">
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about">
+
+      <div class="section-label">
+        01 · About
+      </div>
+
+      <h2>
+        Management with a technical background.
+      </h2>
+
+      <p class="muted">
+        For the past 3 years I’ve been working as a
+        Support Services Manager, working with technical
+        teams across development and production.
+      </p>
+
+      <p class="muted">
+        Before moving into management, I worked as a
+        Business Technical Consultant and ERP Consultant.
+        That background gave me a strong understanding of
+        both business needs and technical solutions.
+      </p>
+
+      <p class="muted">
+        I’m still a programmer at heart. I enjoy understanding
+        how systems work, solving technical problems and
+        experimenting with new technology.
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         EXPERIENCE
+    ========================== -->
+
+    <section id="experience">
+
+      <div class="section-label">
+        02 · Experience
+      </div>
+
+      <h2>
+        Professional journey
+      </h2>
+
+      <div class="timeline">
+
+        <article class="job">
+
+          <div class="date">
+            2023 — Present
+          </div>
+
+          <div>
+
+            <div class="job-title">
+              Support Services Manager
+            </div>
+
+            <p>
+              Managing support services and working with
+              technical teams across development and production.
+              My role combines people leadership, service
+              management, operational thinking and technical
+              problem-solving.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article class="job">
+
+          <div class="date">
+            Previous
+          </div>
+
+          <div>
+
+            <div class="job-title">
+              Business Technical Consultant
+            </div>
+
+            <p>
+              Working between business and technology,
+              helping translate business requirements into
+              practical technical solutions.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article class="job">
+
+          <div class="date">
+            Previous
+          </div>
+
+          <div>
+
+            <div class="job-title">
+              ERP Consultant
+            </div>
+
+            <p>
+              Working with ERP systems, business processes
+              and technical implementations, supporting
+              organizations in making better use of their
+              systems.
+            </p>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         PROJECTS
+    ========================== -->
+
+    <section id="projects">
+
+      <div class="section-label">
+        03 · Projects
+      </div>
+
+      <h2>
+        Things I’ve built and explored.
+      </h2>
+
+      <p class="muted">
+        A selection of professional and personal projects
+        across different technologies and platforms.
+      </p>
+
+
+      <div class="cards">
+
+        <article class="card">
+
+          <span class="tag">
+            C# · Windows Mobile
+          </span>
+
+          <h3>
+            Mobile Applications
+          </h3>
+
+          <p class="muted">
+            Development of applications and tools for
+            Windows Mobile devices using C# and related
+            technologies.
+          </p>
+
+        </article>
+
+
+        <article class="card">
+
+          <span class="tag">
+            Python
+          </span>
+
+          <h3>
+            Python Projects
+          </h3>
+
+          <p class="muted">
+            Small utilities, automation scripts,
+            experiments and personal projects built
+            with Python.
+          </p>
+
+        </article>
+
+
+        <article class="card">
+
+          <span class="tag">
+            Automation
+          </span>
+
+          <h3>
+            Tools & Automation
+          </h3>
+
+          <p class="muted">
+            Projects focused on automating repetitive
+            tasks, connecting systems and making
+            everyday workflows easier.
+          </p>
+
+        </article>
+
+
+        <article class="card">
+
+          <span class="tag">
+            Personal
+          </span>
+
+          <h3>
+            Technology Experiments
+          </h3>
+
+          <p class="muted">
+            Side projects created to learn, experiment
+            and understand new technologies.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         TECHNICAL BACKGROUND
+    ========================== -->
+
+    <section id="technical">
+
+      <div class="section-label">
+        04 · Technical Background
+      </div>
+
+      <h2>
+        Programming is still part of me.
+      </h2>
+
+      <p class="muted">
+        My current role is focused on management and service
+        delivery, but programming has always been an important
+        part of my professional and personal background.
+      </p>
+
+      <div class="skills">
+
+        <span class="skill">
+          C# / .NET
+        </span>
+
+        <span class="skill">
+          Windows Mobile
+        </span>
+
+        <span class="skill">
+          Python
+        </span>
+
+        <span class="skill">
+          ERP Systems
+        </span>
+
+        <span class="skill">
+          Databases
+        </span>
+
+        <span class="skill">
+          Automation
+        </span>
+
+        <span class="skill">
+          Scripting
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOME ASSISTANT
+    ========================== -->
+
+    <section id="home">
+
+      <div class="section-label">
+        05 · Outside Work
+      </div>
+
+      <h2>
+        Home Assistant & gadgets.
+      </h2>
+
+      <p class="muted">
+        Outside of my professional work, I enjoy experimenting
+        with <strong>Home Assistant, home automation and all
+        kinds of gadgets.</strong>
+      </p>
+
+      <p class="muted">
+        I like connecting devices, creating automations,
+        experimenting with new technologies and finding ways
+        to make different systems work together.
+      </p>
+
+      <div class="currently">
+
+        <strong>
+          Curious by default.
+        </strong>
+
+        Programming, automation, smart home technology,
+        gadgets and whatever interesting technology comes next.
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section id="contact">
+
+      <div class="section-label">
+        06 · Contact
+      </div>
+
+      <h2>
+        Let’s connect.
+      </h2>
+
+      <p class="muted">
+        Feel free to reach out through GitHub, LinkedIn
+        or email.
+      </p>
+
+      <div class="links">
+
+        <a
+          class="button"
+          href="https://github.com/vagelisdermos"
+          target="_blank"
+          rel="noopener"
+        >
+          GitHub
+        </a>
+
+        <!-- Βάλε εδώ το LinkedIn σου -->
+        <a
+          class="button"
+          href="#"
+        >
+          LinkedIn
+        </a>
+
+        <!-- Βάλε εδώ το email σου -->
+        <a
+          class="button"
+          href="mailto:YOUR_EMAIL@example.com"
+        >
+          Email
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div class="container">
+      © 2026 Vagelis Dermos
+    </div>
+
+  </footer>
+
 </body>
 </html>
