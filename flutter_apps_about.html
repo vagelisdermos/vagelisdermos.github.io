@@ -1,1 +1,292 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10151d">
+  <meta name="description" content="Παιχνίδια και εφαρμογές για Android από την ομάδα Voodoo.">
+  <meta property="og:title" content="Voodoo Apps">
+  <meta property="og:description" content="Παιχνίδια και εφαρμογές για Android από την ομάδα Voodoo.">
+  <meta property="og:type" content="website">
+  <title>Voodoo Apps</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #10151d;
+      --surface: #1a222d;
+      --surface-2: #222c39;
+      --mint: #75f0bd;
+      --text: #f3f6fa;
+      --muted: #b0bac7;
+      --border: rgb(255 255 255 / 9%);
+    }
 
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; }
+
+    body {
+      min-height: 100vh;
+      padding: 36px 20px;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% 0, rgb(39 91 77 / 35%), transparent 34rem),
+        var(--background);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    main { width: min(880px, 100%); margin: 0 auto; }
+
+    .brand { color: var(--mint); font-size: .78rem; font-weight: 800; letter-spacing: .3em; }
+
+    h1 {
+      margin: 8px 0 10px;
+      font-size: clamp(2.1rem, 8vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: -.045em;
+    }
+
+    .intro { max-width: 620px; margin: 0; color: var(--muted); font-size: 1.08rem; }
+
+    .news {
+      margin-top: 22px;
+      padding: 14px 18px;
+      border: 1px solid rgb(117 240 189 / 30%);
+      border-radius: 14px;
+      background: rgb(117 240 189 / 8%);
+    }
+    .news strong { color: var(--mint); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+    }
+
+    .app-head { display: flex; gap: 14px; align-items: center; }
+
+    .icon {
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+      border-radius: 16px;
+      background: var(--surface-2);
+      font-size: 30px;
+    }
+    .icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .app h2 { margin: 0; font-size: 1.08rem; line-height: 1.25; }
+    .tagline { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
+
+    .badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 8px;
+      border-radius: 99px;
+      background: var(--mint);
+      color: #0b2a1f;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      vertical-align: 2px;
+    }
+
+    .desc { flex: 1; margin: 0; color: var(--muted); font-size: .93rem; }
+
+    .get {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: var(--mint);
+      color: #0b2a1f;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .get:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+    .get svg { width: 18px; height: 18px; }
+
+    footer { margin: 28px 2px 0; color: #8995a4; font-size: .88rem; }
+    footer a { color: var(--mint); }
+
+    /* Μέσα σε εφαρμογή (iframe): μόνο οι κάρτες, χωρίς φόντο και περιθώρια. */
+    .embed body { min-height: 0; padding: 0; background: transparent; }
+    .embed main { width: 100%; }
+    .embed .hero, .embed footer { display: none; }
+    .embed .news { margin-top: 0; margin-bottom: 12px; }
+    .embed .grid { grid-template-columns: 1fr; gap: 10px; margin-top: 0; }
+    .embed .app { padding: 14px; background: var(--surface-2); }
+
+    @media (max-width: 480px) {
+      body { padding: 28px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="brand">VOODOO</div>
+      <h1 data-i18n="title"></h1>
+      <p class="intro" data-i18n="intro"></p>
+    </header>
+
+    <div class="news" id="news" hidden></div>
+    <div class="grid" id="apps"></div>
+
+    <footer>
+      <span data-i18n="contact"></span>
+      <a href="mailto:support@voodootrivia.com">support@voodootrivia.com</a>
+      · © 2026 Voodoo
+    </footer>
+  </main>
+
+  <script>
+    // ================================================================
+    //  ΕΔΩ ΑΛΛΑΖΕΙΣ ΤΟ ΠΕΡΙΕΧΟΜΕΝΟ — οι εφαρμογές το βλέπουν αμέσως
+    //  μετά το push (το GitHub Pages κάνει cache έως ~10 λεπτά).
+    // ================================================================
+
+    // Ανακοίνωση πάνω από τις κάρτες. Βάλε null για να μη φαίνεται.
+    const NEWS = null;
+    // Παράδειγμα:
+    // const NEWS = { el: '<strong>Νέο!</strong> 500 νέες ερωτήσεις στο Trivia Duel.',
+    //                en: '<strong>New!</strong> 500 new questions in Trivia Duel.' };
+
+    // Σειρά εμφάνισης = σειρά στη λίστα.
+    // icon: εικόνα στον φάκελο icons/ (προαιρετικό), αλλιώς φαίνεται το emoji.
+    // badge: π.χ. { el: 'ΝΕΟ', en: 'NEW' } ή null.
+    const APPS = [
+      {
+        id: 'com.voodoo.duel.voodoo_trivia_duel',
+        name: 'Voodoo Trivia Duel',
+        icon: 'icons/trivia.png',
+        emoji: '🧠',
+        badge: null,
+        tagline: { el: 'Κουίζ γνώσεων για 1–4 παίκτες', en: 'Trivia quiz for 1–4 players' },
+        desc: {
+          el: 'Μονομαχία γνώσεων σε μία ή δύο συσκευές, με χιλιάδες ερωτήσεις σε ελληνικά και αγγλικά που ανανεώνονται συνεχώς.',
+          en: 'A knowledge duel on one or two devices, with thousands of Greek and English questions that are updated constantly.'
+        }
+      },
+      {
+        id: 'com.voodoo.ping_pong_duel_retro',
+        name: 'Ping Pong Duel',
+        icon: null,
+        emoji: '🏓',
+        badge: null,
+        tagline: { el: 'Πινγκ πονγκ για 2 παίκτες', en: '2 player table tennis' },
+        desc: {
+          el: 'Ρετρό πινγκ πονγκ στην ίδια οθόνη. Πάρε τον φίλο σου και δες ποιος έχει τα καλύτερα αντανακλαστικά.',
+          en: 'Retro table tennis on one screen. Grab a friend and find out who has the fastest reflexes.'
+        }
+      },
+      {
+        id: 'com.voodoo.duel.score4_duel',
+        name: 'Score4',
+        icon: null,
+        emoji: '🟡',
+        badge: null,
+        tagline: { el: 'Κλασικό παιχνίδι στρατηγικής', en: 'Classic strategy board game' },
+        desc: {
+          el: 'Ρίξε τα πουλάκια σου και κάνε πρώτος τετράδα — οριζόντια, κάθετα ή διαγώνια.',
+          en: 'Drop your discs and be the first to connect four — across, down or diagonally.'
+        }
+      },
+      {
+        id: 'com.voodoo.voooodecibelmeter',
+        name: 'Voooodecibelmeter',
+        icon: 'icons/decibelmeter.png',
+        emoji: '🔊',
+        badge: { el: 'ΝΕΟ', en: 'NEW' },
+        tagline: { el: 'Ζωντανή ένδειξη έντασης ήχου', en: 'Live sound level meter' },
+        desc: {
+          el: 'Δες πόσο θόρυβο έχει γύρω σου, με γράφημα σε πραγματικό χρόνο, πλήρη οθόνη και ιστορικό μετρήσεων.',
+          en: 'See how loud it is around you, with a live graph, full-screen mode and measurement history.'
+        }
+      }
+    ];
+
+    const TEXT = {
+      el: { title: 'Οι εφαρμογές μας', intro: 'Παιχνίδια και εργαλεία για Android από την ομάδα Voodoo.', get: 'Google Play', contact: 'Επικοινωνία:' },
+      en: { title: 'Our apps', intro: 'Games and tools for Android from the Voodoo team.', get: 'Google Play', contact: 'Contact:' }
+    };
+
+    // ================================================================
+
+    const params = new URLSearchParams(location.search);
+    const embedded = params.has('embed');
+    const exclude = (params.get('exclude') || '').split(',');
+    const lang = (params.get('lang') || navigator.language || 'el').toLowerCase().startsWith('el') ? 'el' : 'en';
+    const t = TEXT[lang];
+
+    document.documentElement.lang = lang;
+    document.documentElement.classList.toggle('embed', embedded);
+    document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t[el.dataset.i18n]; });
+
+    const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2.8v18.4c0 .6.7 1 1.2.7l15.6-9.2c.5-.3.5-1 0-1.3L5.2 2.1C4.7 1.8 4 2.2 4 2.8z"/></svg>';
+
+    const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    function appCard(app) {
+      const url = 'https://play.google.com/store/apps/details?id=' + encodeURIComponent(app.id);
+      const icon = app.icon
+        ? `<img src="${app.icon}" alt="" loading="lazy" onerror="this.replaceWith('${app.emoji}')">`
+        : app.emoji;
+      const badge = app.badge ? `<span class="badge">${escapeHtml(app.badge[lang])}</span>` : '';
+      return `
+        <article class="app">
+          <div class="app-head">
+            <div class="icon">${icon}</div>
+            <div>
+              <h2>${escapeHtml(app.name)}${badge}</h2>
+              <p class="tagline">${escapeHtml(app.tagline[lang])}</p>
+            </div>
+          </div>
+          <p class="desc">${escapeHtml(app.desc[lang])}</p>
+          <a class="get" href="${url}" target="_blank" rel="noopener">${playIcon}${t.get}</a>
+        </article>`;
+    }
+
+    document.getElementById('apps').innerHTML =
+      APPS.filter((app) => !exclude.includes(app.id)).map(appCard).join('');
+
+    if (NEWS) {
+      const news = document.getElementById('news');
+      news.innerHTML = NEWS[lang];
+      news.hidden = false;
+    }
+
+    // Μέσα σε εφαρμογή: λέμε στη γονική σελίδα το ύψος μας και της
+    // ζητάμε να ανοίξει τα links (το iframe δεν μπορεί να ανοίξει το Play Store).
+    if (embedded && window.parent !== window) {
+      const main = document.querySelector('main');
+      const postHeight = () => parent.postMessage({ type: 'voodoo-apps-height', height: main.offsetHeight }, '*');
+      new ResizeObserver(postHeight).observe(main);
+      window.addEventListener('load', postHeight);
+
+      document.addEventListener('click', (event) => {
+        const link = event.target.closest('a[href]');
+        if (!link) return;
+        event.preventDefault();
+        parent.postMessage({ type: 'voodoo-apps-open', url: link.href }, '*');
+      });
+    }
+  </script>
+</body>
+</html>
